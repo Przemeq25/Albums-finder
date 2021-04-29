@@ -1,0 +1,20 @@
+.list {
+  list-style: none;
+  width: 100%;
+}
+.listHeadWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(1em, 1fr));
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.listHeadText {
+  font-weight: 600;
+}
+.listHeadWrapper > span {
+  text-align: right;
+}
