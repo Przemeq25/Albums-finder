@@ -10,3 +10,12 @@ export const searchForAlbumsOrArtists = (phrase) => {
     },
   });
 };
+
+export const getAlbumDescription = (albumID) => {
+  return axios.get(`${apiUrl}/lookup`, {
+    params: {
+      id: albumID,
+      entity: 'song',
+    },
+  });
+};

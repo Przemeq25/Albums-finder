@@ -1,0 +1,32 @@
+.popupBox {
+  width: 100%;
+  position: fixed;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popupWrapper {
+  width: 100%;
+  max-width: 960px;
+  height: calc(100vh - 300px);
+  background: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  overflow: auto;
+  padding: 20px;
+  position: relative;
+}
+.closeIcon {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: rgba(0, 0, 0, 1);
+  font-size: 20px;
+}
+.popupHeader {
+  min-height: 30px;
+  margin-bottom: 30px;
+}
