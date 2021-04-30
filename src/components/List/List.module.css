@@ -18,3 +18,10 @@
 .listHeadWrapper > span {
   text-align: right;
 }
+
+.infoText {
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 2rem;
+  margin: 40px 0;
+  font-weight: 600;
+}

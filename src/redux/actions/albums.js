@@ -5,16 +5,18 @@ import {
 } from '../../api/albums';
 
 export const searchPhrase = (phrase) => async (dispatch) => {
+  dispatch({ type: albumsTypes.GET_ALBUMS_REQUEST });
   try {
     const {
       data: { results },
     } = await searchForAlbumsOrArtists(phrase);
     dispatch({
-      type: albumsTypes.GET_ALBUMS,
+      type: albumsTypes.GET_ALBUMS_SUCCESS,
       payload: results,
     });
   } catch (e) {
     alert('Something goes wrong. Try again');
+    dispatch({ type: albumsTypes.GET_ALBUMS_ERROR, payload: e });
   }
 };
 
@@ -23,16 +25,18 @@ export const closePopup = () => (dispatch) =>
 
 export const getAlbumById = (albumID) => async (dispatch) => {
   dispatch({ type: albumsTypes.OPEN_ALBUM_DESCRIPTION });
+  dispatch({ type: albumsTypes.GET_ALBUM_DESCRIPTION_REQUEST });
   try {
     const {
       data: { results },
     } = await getAlbumDescription(albumID);
     dispatch({
-      type: albumsTypes.PICK_ALBUM,
+      type: albumsTypes.GET_ALBUM_DESCRIPTION_SUCCESS,
       payload: results,
     });
   } catch (e) {
     alert('Something goes wrong. Try again');
+    dispatch({ type: albumsTypes.GET_ALBUM_DESCRIPTION_ERROR, payload: e });
     dispatch(closePopup());
   }
 };

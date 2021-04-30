@@ -17,11 +17,13 @@ function App() {
   const dispatch = useDispatch();
   const albums = useSelector((state) => state.albums);
   const isPopupOpen = useSelector((state) => state.isPopupOpen);
-  const albumDescription = useSelector((state) => state.album);
+  const albumDescription = useSelector((state) => state.album.albumDescription);
+  const albumTracks = useSelector((state) => state.album.albumTracks);
+  const albumIsFetching = useSelector((state) => state.album.isFetching);
+  const isFetching = useSelector((state) => state.isFetching);
 
   useEffect(() => {
     const searchAlbums = () => dispatch(searchPhrase(phrase));
-
     searchAlbums();
   }, [phrase, dispatch]);
 
@@ -39,14 +41,24 @@ function App() {
 
   return (
     <Container>
-      <SearchInput handleInputChange={handleInputChange} phrase={phrase} />
-      <List headerItems={['Artist', 'Album']} action>
-        {albums?.map((item) => (
-          <ListRow key={item.collectionId}>
-            <ListItemText>{item.artistName}</ListItemText>
-            <ListItemText cursive>{item.collectionName}</ListItemText>
+      <SearchInput
+        handleInputChange={handleInputChange}
+        phrase={phrase}
+        placeholder="Type artist or album name"
+      />
+      <List
+        headerItems={['Artist', 'Album']}
+        action
+        isEmpty={Boolean(!phrase.length > 0)}
+        noResult={Boolean(!albums.length && phrase.length > 0 && !isFetching)}
+        isLoading={isFetching}
+      >
+        {albums?.map(({ collectionId, artistName, collectionName }) => (
+          <ListRow key={collectionId}>
+            <ListItemText>{artistName}</ListItemText>
+            <ListItemText cursive>{collectionName}</ListItemText>
             <ListItemAction>
-              <Button handleClick={() => handlePickAlbum(item.collectionId)}>
+              <Button handleClick={() => handlePickAlbum(collectionId)}>
                 See more
               </Button>
             </ListItemAction>
@@ -56,22 +68,27 @@ function App() {
       {isPopupOpen && (
         <Popup
           handleClose={handleClosePopup}
-          title={albumDescription[0]?.collectionName}
+          title={albumDescription?.collectionName}
         >
-          {console.log(albumDescription)}
-          <AlbumDescription
-            image={albumDescription[0]?.artworkUrl100}
-            artist={albumDescription[0]?.artistName}
-            track={albumDescription[0]?.trackCount}
-            type={albumDescription[0]?.primaryGenreName}
-          />
-          <List headerItems={['Songs']}>
-            {albumDescription?.slice(1).map((song) => (
-              <ListRow key={song.trackId} border>
-                <ListItemText>{song.trackName}</ListItemText>
-              </ListRow>
-            ))}
-          </List>
+          {albumIsFetching ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <AlbumDescription
+                image={albumDescription?.artworkUrl100}
+                artist={albumDescription?.artistName}
+                track={albumDescription?.trackCount}
+                type={albumDescription?.primaryGenreName}
+              />
+              <List headerItems={['Songs']}>
+                {albumTracks?.map((song) => (
+                  <ListRow key={song.trackId} border>
+                    <ListItemText>{song.trackName}</ListItemText>
+                  </ListRow>
+                ))}
+              </List>
+            </>
+          )}
         </Popup>
       )}
     </Container>

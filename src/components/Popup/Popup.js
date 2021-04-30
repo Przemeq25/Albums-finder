@@ -1,27 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styles from './Popup.module.css';
 import PropTypes from 'prop-types';
+import { useOverflowHidden } from '../../hooks/useOverflowHidden';
+import { useClickAway } from '../../hooks/useClickAway';
+import { useKeyPress } from '../../hooks/useKeyPress';
 
 const Popup = ({ children, title, handleClose }) => {
   const popupRef = useRef(null);
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => (document.body.style.overflow = 'unset');
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('click', handleClick);
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-
-    function handleClick(e) {
-      if (popupRef.current && !popupRef.current.contains(e.target)) {
-        handleClose();
-      }
-    }
-  });
+  useOverflowHidden();
+  useClickAway(popupRef, handleClose);
+  useKeyPress(undefined, handleClose);
 
   return (
     <div className={styles.popupBox}>

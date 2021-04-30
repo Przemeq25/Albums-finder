@@ -1,35 +1,69 @@
 import { albumsTypes } from '../types';
 
 const initialState = {
+  isFetching: false,
+  error: '',
   albums: [],
-  album: [],
+  album: {
+    isFetching: false,
+    error: '',
+    albumDescription: {},
+    albumTracks: [],
+  },
   isPopupOpen: false,
 };
 
 export const albumsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case albumsTypes.GET_ALBUMS:
+    case albumsTypes.GET_ALBUMS_REQUEST:
       return {
         ...state,
+        isFetching: true,
+      };
+    case albumsTypes.GET_ALBUMS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
         albums: action.payload,
       };
-    case albumsTypes.PICK_ALBUM:
+    case albumsTypes.GET_ALBUMS_ERROR:
       return {
         ...state,
-        album: action.payload,
+        isFetching: false,
+        error: action.payload,
+      };
+    case albumsTypes.OPEN_ALBUM_DESCRIPTION:
+      return {
+        ...state,
+        album: { ...state.album, albumId: action.payload },
+        isPopupOpen: true,
+      };
+    case albumsTypes.GET_ALBUM_DESCRIPTION_REQUEST:
+      return {
+        ...state,
+        album: { ...state.album, isFetching: true },
+      };
+    case albumsTypes.GET_ALBUM_DESCRIPTION_SUCCESS:
+      return {
+        ...state,
+        album: {
+          ...state.album,
+          isFetching: false,
+          albumDescription: action.payload[0],
+          albumTracks: action.payload.slice(1),
+        },
+      };
+    case albumsTypes.GET_ALBUM_DESCRIPTION_ERROR:
+      return {
+        ...state,
+        album: { ...state.album, isFetching: false, error: action.payload },
       };
 
     case albumsTypes.CLOSE_ALBUM_DESCRIPTION:
       return {
         ...state,
         isPopupOpen: false,
-        album: [],
-      };
-
-    case albumsTypes.OPEN_ALBUM_DESCRIPTION:
-      return {
-        ...state,
-        isPopupOpen: true,
+        album: initialState.album,
       };
 
     default:
