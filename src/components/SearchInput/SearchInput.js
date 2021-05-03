@@ -10,6 +10,7 @@ const SearchInput = ({ phrase, handleInputChange, placeholder }) => (
     placeholder={placeholder}
     value={phrase}
     onChange={handleInputChange}
+    data-testid="search-box"
   />
 );
 

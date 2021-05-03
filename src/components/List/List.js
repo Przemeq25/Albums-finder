@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './List.module.css';
 import PropTypes from 'prop-types';
 
-const List = ({ children, headerItems, action, isEmpty, noResult }) => (
-  <>
+const List = ({ children, headerItems, action, isEmpty }) => (
+  <div data-testid="list" className={styles.listWrapper}>
     <div className={styles.listHeadWrapper}>
       {headerItems?.map((item) => (
         <p className={styles.listHeadText} key={item}>
@@ -16,30 +16,24 @@ const List = ({ children, headerItems, action, isEmpty, noResult }) => (
         </span>
       )}
     </div>
-    {(() => {
-      if (noResult)
-        return (
-          <h3 className={styles.infoText}>Your search term was not found</h3>
-        );
-      else if (isEmpty)
-        return <h3 className={styles.infoText}>Search for favorite albums</h3>;
-      else return <ul className={styles.list}>{children}</ul>;
-    })()}
-  </>
+    {isEmpty ? (
+      <h3 className={styles.infoText}>No data to display</h3>
+    ) : (
+      <ul className={styles.list}>{children}</ul>
+    )}
+  </div>
 );
 
 export default List;
 
 List.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   action: PropTypes.bool,
   headerItems: PropTypes.arrayOf(PropTypes.string.isRequired),
   isEmpty: PropTypes.bool,
-  noResult: PropTypes.bool,
 };
 
 List.defaultProps = {
   action: false,
   isEmpty: false,
-  noResult: false,
 };

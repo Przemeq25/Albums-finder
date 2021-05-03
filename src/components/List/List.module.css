@@ -2,6 +2,12 @@
   list-style: none;
   width: 100%;
 }
+.listWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .listHeadWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(1em, 1fr));

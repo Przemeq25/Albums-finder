@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 
 const Button = ({ children, handleClick }) => {
   return (
-    <button className={styles.button} onClick={handleClick}>
+    <button
+      className={styles.button}
+      onClick={handleClick}
+      data-testid="seemore-button"
+    >
       {children}
     </button>
   );

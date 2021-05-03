@@ -35,7 +35,6 @@ export const albumsReducer = (state = initialState, action) => {
     case albumsTypes.OPEN_ALBUM_DESCRIPTION:
       return {
         ...state,
-        album: { ...state.album, albumId: action.payload },
         isPopupOpen: true,
       };
     case albumsTypes.GET_ALBUM_DESCRIPTION_REQUEST:

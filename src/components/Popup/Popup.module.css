@@ -1,6 +1,7 @@
 .popupBox {
   width: 100%;
   position: fixed;
+  top: 0;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
@@ -29,4 +30,10 @@
 .popupHeader {
   min-height: 30px;
   margin-bottom: 30px;
+}
+
+@media (max-width: 700px) {
+  .popupWrapper {
+    height: 100%;
+  }
 }

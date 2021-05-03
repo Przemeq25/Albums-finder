@@ -1,19 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './Popup.module.css';
 import PropTypes from 'prop-types';
-import { useOverflowHidden } from '../../hooks/useOverflowHidden';
 import { useClickAway } from '../../hooks/useClickAway';
 import { useKeyPress } from '../../hooks/useKeyPress';
 
-const Popup = ({ children, title, handleClose }) => {
+const Popup = ({ children, title, handleClose, isPopupOpen }) => {
   const popupRef = useRef(null);
 
-  useOverflowHidden();
+  useEffect(() => {
+    if (isPopupOpen) document.body.style.overflow = 'hidden';
+    return () => (document.body.style.overflow = 'unset');
+  }, [isPopupOpen]);
+
   useClickAway(popupRef, handleClose);
   useKeyPress(undefined, handleClose);
 
-  return (
-    <div className={styles.popupBox}>
+  if (!isPopupOpen) return null;
+
+  return createPortal(
+    <div className={styles.popupBox} data-testid="popup">
       <div className={styles.popupWrapper} ref={popupRef}>
         <div className={styles.popupHeader}>
           <h3 className={styles.popupTitle}>{title}</h3>
@@ -23,7 +29,8 @@ const Popup = ({ children, title, handleClose }) => {
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

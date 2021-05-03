@@ -16,7 +16,10 @@ export const searchPhrase = (phrase) => async (dispatch) => {
     });
   } catch (e) {
     alert('Something goes wrong. Try again');
-    dispatch({ type: albumsTypes.GET_ALBUMS_ERROR, payload: e });
+    dispatch({
+      type: albumsTypes.GET_ALBUMS_ERROR,
+      payload: 'Something goes wrong. Try again',
+    });
   }
 };
 
@@ -36,7 +39,10 @@ export const getAlbumById = (albumID) => async (dispatch) => {
     });
   } catch (e) {
     alert('Something goes wrong. Try again');
-    dispatch({ type: albumsTypes.GET_ALBUM_DESCRIPTION_ERROR, payload: e });
+    dispatch({
+      type: albumsTypes.GET_ALBUM_DESCRIPTION_ERROR,
+      payload: 'Something goes wrong. Try again',
+    });
     dispatch(closePopup());
   }
 };
