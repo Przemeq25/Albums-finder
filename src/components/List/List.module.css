@@ -2,6 +2,12 @@
   list-style: none;
   width: 100%;
 }
+.listWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .listHeadWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(1em, 1fr));
@@ -17,4 +23,11 @@
 }
 .listHeadWrapper > span {
   text-align: right;
+}
+
+.infoText {
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 2rem;
+  margin: 40px 0;
+  font-weight: 600;
 }
