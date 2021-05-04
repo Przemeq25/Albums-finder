@@ -18,6 +18,7 @@ describe('Albums actions', () => {
   afterEach(() => {
     fetchMock.restore();
   });
+  console.error = jest.fn();
 
   it('should get albums successfully', () => {
     let expectedActions = [

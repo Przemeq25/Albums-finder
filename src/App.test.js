@@ -4,6 +4,7 @@ import { screen } from '@testing-library/react';
 import { initialState, renderWrapper } from './utils/test-utils';
 
 describe('App', () => {
+  console.error = jest.fn();
   it('should render App with initialState', () => {
     const wrapper = renderWrapper(<App />, {
       initialState: initialState,

@@ -79,9 +79,9 @@ function App() {
               type={albumDescription?.primaryGenreName}
             />
             <List headerItems={['Songs']}>
-              {albumTracks?.map((song) => (
-                <ListRow key={song.trackId} border>
-                  <ListItemText>{song.trackName}</ListItemText>
+              {albumTracks?.map(({ trackId, trackName }) => (
+                <ListRow key={trackId} border>
+                  <ListItemText>{trackName}</ListItemText>
                 </ListRow>
               ))}
             </List>
